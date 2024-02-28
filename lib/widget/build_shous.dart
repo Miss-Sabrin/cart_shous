@@ -1,43 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:shouses/data/shous_model.dart';
 
 class BuildShous extends StatelessWidget {
-  const BuildShous({super.key});
+  final Shous shous;
+  const BuildShous({super.key,required this.shous});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
       body: SafeArea(
-        child:Row
+        child:Row( 
        
   
-            (children: [
-              Expanded(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  children: [
-                  
+            children: [
 
-
-
-                    
-                  ],
-                ),
-              )
-            ]),
-          
-        
-        
-
-      ),
-               
-    );
-  }
-}
-
-
-  Widget buldShous()=>Padding(
+              
+  
+  Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 children: [
@@ -66,7 +46,7 @@ class BuildShous extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text('nike',style: TextStyle(color: Colors.white),),
+                                  Text(shous.name,style: TextStyle(color: Colors.white),),
                                   
                                 ],
                               ),
@@ -79,7 +59,7 @@ class BuildShous extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             children: [
-                              Text('EPIC-REACT',style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)
+                              Text(shous.description,style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),)
                             ],
                         
                             
@@ -90,13 +70,13 @@ class BuildShous extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('12000',style: TextStyle(color: Colors.white,fontSize: 15),),
+                              child: Text('\$''${shous.price}',style: TextStyle(color: Colors.white,fontSize: 15),),
                             ),
                           ],
                         ),
                         Row(
                           children: [
-                            Image.asset('assets/images/shous1.png',height: 150,)
+                            Image.asset(shous.imagePath,height: 150,)
                           ],
                         ),
 
@@ -127,5 +107,19 @@ class BuildShous extends StatelessWidget {
                   )
                 ],
               ),
-            );
+            )
+
+              
+            ]),
+          
+        
+        
+
+      ),
+               
+    );
+  }
+}
+
+
 

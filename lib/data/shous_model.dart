@@ -8,6 +8,7 @@ class Shous{
   final int price;
   final Color;
   final bool isFovrite;
+  int quantity;
   // void Function()? onPressed;
 
   Shous({
@@ -18,6 +19,7 @@ class Shous{
      required this.price,
      required this.Color,
       required this.isFovrite,
+      required this.quantity
       // required this.onPressed,
   });
 

@@ -1,165 +1,228 @@
 import 'package:flutter/material.dart';
-import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:shouses/data/shous_model.dart';
-import 'package:shouses/data/shous_sata.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shouses/pages/detail_page.dart';
+import 'package:shouses/pages/homepage.dart';
+import 'package:shouses/provider/cart_provider.dart';
+import 'package:shouses/widget/build_shous.dart';
 
-class CratPage extends StatefulWidget {
-  const CratPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<CratPage> createState() => _CratPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _CratPageState extends State<CratPage> {
+class _CartPageState extends State<CartPage> {
+   int index=0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DetailPage()));
 
-            },
-            child: Row(
-              children: [
-                
-                Icon(Icons.arrow_back,color: Colors.black,size: 30,)
-              ],
-            ),
-          ),
+    final provider=CartProvider.of(context);
+    final finalList=provider.cart;
+    _buildCatecory(IconData icon,int index){
+      return 
+    GestureDetector(
+      onTap: () {
+        setState(() {
+          icon==Icons.add
+          ?provider.incrementQunatity(index)
+          :provider.decrementQunatity(index);
+          //Icon
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.amberAccent
         ),
-
-     
-       
-      
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text('My Bag',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),)
-                  ],
-                ),
-                Text('Total 3 item')
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                
-                height: 1,
-                decoration: BoxDecoration(
-                  color: Colors.grey[350]
-                ),
-              ),
-            ),
-
-            //todo item bay
-            SizedBox(
-              height: 100,
-              
-              child: ScrollSnapList(
-                scrollDirection: Axis.vertical,
-                itemBuilder: bayShous,
-                 itemCount: plants.length, 
-                 itemSize: 370,
-                  onItemFocus: (index){}),
-            )
-
-
-            // ListView.builder(
-            //   itemCount: plants.length,
-            //   itemBuilder: (BuildContext context, int index) {
-                
-            //     return bayShous(context, index) ;
-            //   },
-            // ),
-
-      
-         
-            ///
-          ],
+        child: Icon(
+          icon,
+          size: 20,
         ),
       ),
-      
-      
     );
-  }
 
-  Widget bayShous(BuildContext context ,int index){
-    Shous shous=plants[index];
-    return 
+
+    }
+
+    
+    return Scaffold(
+      
+      appBar: AppBar(
+        elevation: 120,
+        backgroundColor: finalList[index].Color,
+        
+        title: Column(
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+
+                    
+                  },
+                  
+                  child: Icon(Icons.arrow_back_rounded,color: Colors.black,size: 30,),
+                  ),
+              ],
+            ),
+            SizedBox(height: 10,),
+            
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Row(
+            //       children: [
+            //         Text('My  Bag',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
+            //       ],
+            //     ),
+            //     Text('Total 3 items',style: TextStyle(fontSize: 10,color: Colors.black),)
+            //   ],
+            // ),
+          ],
+        )
+        
+      ),
+      body: Column(
+        
+
+        
+          children: [
+            
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      Stack(
-                        children: [
-                          Container(
-                            width: 90,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              )
-                            ),
-                            child: Image.asset(shous.imagePath,height: 100,width: 200,fit: BoxFit.fill,),
-                          ),
-                          
-                        ],
-                      )
+                      Text('My Bag',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.black),),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: Column(
-                      children: [
-                       Row(
-                        children: [
-                          
-                              Text(shous.name)
-                        ],
-                       ),
-                       SizedBox(height: 15,),
-                       Text('\$${shous.price}'),
-                       Row(
-                        children: [
-                          Row(
-                            children: [
-                              TextButton(onPressed: (){}, 
-                              child: Icon(Icons.minimize,size: 25,color: Colors.black,))
-                            ],
-                          ),
-                          Text('1'),
-                          
-                          TextButton(onPressed: (){},
-                          
-                           child: Icon(Icons.add,size: 25,
-                           color: Colors.black,))
-                        ],
-                       )
-                      ],
-                    ),
-                  )
+                  Text('Total 3 items',style: TextStyle(fontSize: 15,color: Colors.black),)
                 ],
               ),
-            );
+            ),
+            Container(
+              height: 1,
+              width: 380,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+              ),
+            ),
+            
+
+          
+        
+        
+          Expanded(child: 
+          ListView.builder(
+            itemCount: finalList.length,
+            itemBuilder: ( context,  index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+
+                child: Slidable(
+                   endActionPane: ActionPane(
+                  motion: ScrollMotion(),
+                  children: [
+                    SlidableAction(onPressed: (context){
+                      finalList[index].quantity=1;
+                      finalList.removeAt(index);
+                      setState(() {
+                        
+                      });
+                    },
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    icon: Icons.delete,
+                    label: 'Delete',
+                    )
+
+                ]),
+
+                //todo end animation remove item...!
+                  child: ListTile(
+                    title: Text(finalList[index].name,
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    subtitle: Text(finalList[index].price.toString(),
+                    overflow: TextOverflow.ellipsis,),
+                    leading: CircleAvatar(radius: 30,
+                    backgroundImage: AssetImage(finalList[index].imagePath),
+                    backgroundColor: finalList[index].Color,
+                    ),
+                    trailing: Column(
+                      children: [
+                        _buildCatecory(Icons.add,index),
+                        Text(finalList[index].quantity.toString(),
+                        style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                        _buildCatecory(Icons.remove, index)
+                        
+                              
+                              
+                      ],
+                    ),
+                    tileColor: Colors.white70,
+                  ),
+                ),
+              );
+            },
+          ),),
+
+        
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Total',style: TextStyle(fontSize: 20),),
+                      
+                        
+             
+                    ],
+                         ),
+                         
+                      Text('\$${provider.getTotalPrice()}',
+                      style: TextStyle(fontSize: 30,
+                      fontWeight: FontWeight.bold),
+                      ),
+             
+                 ],
+               ),
+             ),
+             SizedBox(
+              
+               child: Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Row(
+                  children: [
+                    ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(width: 360,height: 40),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: finalList[index].Color,
+                          elevation: 20,
+                    
+                        ),
+                       
+                        onPressed: (){}, child: Text('Next',style:
+                         TextStyle(
+                          
+                          
+                        ),)),
+                    )
+                  ],
+                 ),
+               ),
+             )
+          
+        ],
+      ),
+
+    );
   }
 }

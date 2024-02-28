@@ -8,6 +8,8 @@ import 'package:shouses/widget/build_shous.dart';
 import 'package:shouses/widget/shous_Animate.dart';
 
 class HomePage extends StatefulWidget {
+    //final Shous shous;
+
   const HomePage({super.key});
 
   @override
@@ -17,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectId=0;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     
     return Scaffold(
       appBar: AppBar(
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
               Icon(Icons.search,color: Colors.black,),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Icon(Icons.search,color: Colors.black,),
+                              child: Icon(Icons.car_rental,color: Colors.black,),
                             )
 
             ],
@@ -48,19 +50,16 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            
+            
             children: [
         
               Row( children: [
-                  for(int i=0; i<categories.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-                    child: Text(categories[i].name,),
-                  ),
-        
-        
-        
-        
-        
+                _buildCatecory(0,'all'),
+
+               // _buildCatecory(1,'all'),
+
         
                
               ],),
@@ -70,6 +69,7 @@ class _HomePageState extends State<HomePage> {
         
                  Row (
                   children: [
+                  
                     Expanded(
                       
                       child: SizedBox(
@@ -79,12 +79,13 @@ class _HomePageState extends State<HomePage> {
                                   
                           child: ScrollSnapList(
                             
-                            itemBuilder: buildShous, 
+                            itemBuilder:buildShous, 
                             itemCount: plants.length, 
                             itemSize: 370,
                              onItemFocus: (index){},
                              
                              //dynamicItemSize: true,
+                             //dynamicItemOpacity: 1,
                              
                              ),
                              
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                   )
       
                 ],
-              )
+              ),
       
       
       
@@ -153,16 +154,45 @@ class _HomePageState extends State<HomePage> {
         
         
             ],
+            
           ),
+          
         ),
       ),
+      
 
      
       
       
     );
   }
-} 
+
+  //todo buldCatecory
+  
+Widget _buildCatecory(int index,String name)=>
+
+  
+  
+     Row(children: [
+       for(int i=0; i<categories.length; i++)
+          Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+       child: GestureDetector(
+        onTap: () {
+          setState(() {
+            selectId=i;
+          });
+        },
+         child: Text(categories[i].name,style: TextStyle(color: selectId==i? Colors.black:Colors.grey,),
+         ),
+       )
+     ),
+  
+    ],);
+  
+ 
+
+
 
 ////todo widget textRoted
 
@@ -234,12 +264,55 @@ class _HomePageState extends State<HomePage> {
         ));
 
 
+
 //todo buildShous
 
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //todo started shous
+
+
              Widget buildShous(BuildContext context, int index){
 
               Shous shous=plants[index];
+              selectId=index;
+              
 
 
              
@@ -247,7 +320,7 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DetailPage()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DetailPage(shous: shous,)));
 
                 },
                 child: Row(
@@ -260,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                         //color: Colors.grey,
                         decoration: BoxDecoration( 
                           
-                                color: Colors.grey,
+                                color:shous.Color,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20),
@@ -347,6 +420,8 @@ class _HomePageState extends State<HomePage> {
 
 
 
+
+
 //todo type cart
 Widget cartMenu(BuildContext context , int index){
      Shous shous=plants[index];
@@ -428,4 +503,4 @@ Widget cartMenu(BuildContext context , int index){
 
  
 
- 
+}

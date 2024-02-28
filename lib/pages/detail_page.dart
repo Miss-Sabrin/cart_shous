@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:shouses/data/shous_model.dart';
@@ -5,56 +6,104 @@ import 'package:shouses/data/shous_sata.dart';
 import 'package:shouses/data/size.dart';
 import 'package:shouses/pages/cart_page.dart';
 import 'package:shouses/pages/homepage.dart';
+import 'package:shouses/provider/cart_provider.dart';
+import 'package:shouses/widget/availble_size.dart';
 
-class DetailPage extends StatefulWidget {
-  const DetailPage({super.key});
+class DetailPage extends StatelessWidget {
+  final Shous shous;
+  const DetailPage({super.key,required this.shous});
+
+  //int iselected=0;
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
-}
-
-class _DetailPageState extends State<DetailPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context ) {
+    final provider=CartProvider.of(context);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber[700],
+    
+
+        backgroundColor:shous.Color ,
         elevation: 0,
         
-        title: Center(child: Text('nike')),
-        leading: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-              GestureDetector(
-                onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+        
+        title: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                },
-                child:
-              
-               Icon(Icons.arrow_back,size: 35,)),
+          children: [
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+
+                    
+                  },
+                  child: Icon(Icons.arrow_back)),
+
+
+                        Center(child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 130),
+                          child: Text(shous.name),
+                        ),)
+
+
+              ],
+            ),
+                            Icon(Icons.favorite_border_outlined),
 
           ],
-        ),
-        actions: [
-                    Icon(Icons.favorite_outlined,size: 30,)
+        )
+        
+        
+        
 
-        ],
+        
+        
+        
+      
+        
+
+
+        // leading: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //       GestureDetector(
+        //         onTap: () {
+        //             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+
+        //         },
+        //         child:
+              
+        //        Icon(Icons.arrow_back,size: 35,)),
+
+        //   ],
+        // ),
+        
+        // actions: [
+        //             Icon(Icons.favorite_outlined,size: 30,)
+
+        // ],
 
         
         
       ),
-      body:SafeArea(child: 
+      
+ 
+
+      body:
+      
+      SafeArea(child: 
       Column(
         children: [
           Container(
             height: 300,
             decoration: BoxDecoration(
               
-              color: Colors.amber[700],
+              color: shous.Color,
               image: DecorationImage(image: 
               
-               AssetImage('assets/images/shous6.png',)
+               AssetImage(shous.imagePath,),
+               fit: BoxFit.cover
                
               ),
               borderRadius: BorderRadius.only(
@@ -106,10 +155,10 @@ class _DetailPageState extends State<DetailPage> {
               children: [
                 Row(
                   children: [
-                    Text('Air-Max-270',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
+                    Text(shous.name,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))
                   ],
                 ),
-                Text('\$${150.00}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                Text('\$''${shous.price}',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
               ],
             ),
           ),
@@ -117,7 +166,7 @@ class _DetailPageState extends State<DetailPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(' the nike air max 270 amount lup and icon with ahug max air\n unt for cushong under everey step it features a stercthy \n inner sleeve for a sunng sock-like fit',
+                child: Text(shous.description,
                  style:TextStyle(color: Colors.grey[600]),),
               )
             ],
@@ -173,24 +222,32 @@ class _DetailPageState extends State<DetailPage> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                Expanded(
-                  child: SizedBox(
-                     height: 60,
-                    width: 370,
-                    child: ScrollSnapList(
-                      itemBuilder: buildSize,
-                      itemCount: size.length, 
-                      itemSize: 370, 
-                      onItemFocus: (inex){},
-                      ),
-                      
-                      
-                      
-                  ),
-                )
+                AvailbleSize(size: 'try'),
+                SizedBox(width: 10,),
+               AvailbleSize(size: 'US 7'),
+                               SizedBox(width: 10,),
+
+            AvailbleSize(size: 'US 9'),
+                            SizedBox(width: 10,),
+
+           AvailbleSize(size: 'US 6'),
+                           SizedBox(width: 10,),
+
+            AvailbleSize(size: 'US 4'),
+                            SizedBox(width: 10,),
+            AvailbleSize(size: 'US 5')
+
+
+
+
+
+
+
+               
               ],
             ),
           ),
+          SizedBox(height: 10,),
           
              Row(
               children: [
@@ -198,7 +255,7 @@ class _DetailPageState extends State<DetailPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 370,
-                    height: 50,
+                    height: 70,
 
                     child: ElevatedButton(
 
@@ -207,15 +264,17 @@ class _DetailPageState extends State<DetailPage> {
                       
                       
                       onPressed: (){
+                        provider.toggleShous(shous);
                         
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CratPage()));
+                        
+                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => CartPage()));
 
                       }, 
                     child: Text('ADD TO BAC',),
                     
                       style:  ElevatedButton.styleFrom(
                         
-                        backgroundColor: Colors.amber[600],
+                        backgroundColor: shous.Color,
                         
                       )
 
@@ -234,14 +293,13 @@ class _DetailPageState extends State<DetailPage> {
       )
       )
       
+    
     );
   
 
 
   }
 }
-
-
 
 //todo catacries
 Widget buldCatacries (BuildContext context , int index){
@@ -260,35 +318,51 @@ Widget buldCatacries (BuildContext context , int index){
   
 }
 
-Widget buildSize(BuildContext context ,int index){
+// Widget buildSize(BuildContext context ,int index){
 
-  SizeItem sized=size[index];
+
+//   SizeItem sized=size[index];
+//   return Row(
+//     children: [
+//       AvailbleSize(size:'12' ),
+//             AvailbleSize(size:'30' ),
+
+//    AvailbleSize(size:'23.0' ),
+
+//     ],
+//   );
+  
+
+
+
 
 
   
 
-  return Card(
+  // return Container(
+  //   decoration: BoxDecoration(
+  //     color: Color.
+  //   ),
     
-    elevation: 12,
-    child: ClipRRect(
+  //   elevation: 12,
+  //   child: ClipRRect(
       
       
       
-      child: Row(
-        children: [
-          TextButton(
+  //     child: Row(
+  //       children: [
+  //         TextButton(
 
-          //  onHover: (value) {
-          //    Colors.black;
-          //  },
+  //         //  onHover: (value) {
+  //         //    Colors.black;
+  //         //  },
 
-            onPressed: (){}, child: Text("${sized.size}",style: TextStyle(color: Colors.black),)),
+  //           onPressed: (){}, child: Text("${sized.size}",style: TextStyle(color: Colors.black),)),
 
           
-        ],
-      ),
+  //       ],
+  //     ),
     
-    ),
-  );
+  //   ),
+  // );
 
-}

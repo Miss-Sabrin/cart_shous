@@ -1,16 +1,17 @@
 class Category {
-  final int id;
+  //final int id;
   final String name;
+  final int index;
 
-  Category(this.id, this.name);
+  Category( this.name,this.index);
 }
 
 List<Category> categories = [
-  Category(0, 'All'),
-  Category(1, 'Outdoor'),
-  Category(2, 'Indoor'),
-  Category(3, 'Office'),
+  Category( 'All',0),
+  Category( 'Outdoor',1),
+  Category( 'Indoor',2),
+  Category( 'Office',3),
   //Category(4, 'Garden'),
-    Category(4, 'shous'),
+    Category( 'shous',4),
 
 ];

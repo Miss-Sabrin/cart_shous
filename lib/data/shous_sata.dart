@@ -7,53 +7,69 @@ import 'package:shouses/data/shous_model.dart';
 final List<Shous> plants=[
 
 
-  Shous(id: 0,
+  Shous(id: 1,
    name: 'nike',
     imagePath: 'assets/images/2.png',
      description: 'EPIC-REACT',
-     Color: Colors.amber,
+     Color: Colors.amber.shade800,
 
       price: 13, 
-      isFovrite: false),
+      isFovrite: false,
+      quantity: 1,
+      ),
       
-  Shous(id: 0,
+  Shous(id: 2,
    name: 'nike',
     imagePath: 'assets/images/shous1.png',
     description: 'EPIC-REACT',
       price: 43, 
-           Color: Colors.red[500],
+           Color: Colors.blueGrey.shade500,
 
-      isFovrite: false),
+      isFovrite: false,
+      quantity: 2
       
-  Shous(id: 0,
+      ),
+      
+  Shous(id: 3,
    name: 'nike',
     imagePath: 'assets/images/shous3.png',
 description: 'EPIC-REACT',
-      price: 40, 
-           Color: Colors.grey[600],
+      price: 40,
+       
+           Color: Colors.grey.shade500,
 
-      isFovrite: false),
+      isFovrite: false,
+      quantity: 3
+      
+      ),
 
       
-  Shous(id: 0,
+  Shous(id: 4,
    name: 'nike',
     imagePath: 'assets/images/shous4.png',
 description: 'EPIC-REACT',
       price: 20, 
-           Color: Colors.brown[600],
+           Color: Colors.brown.shade700,
 
-      isFovrite: false),
+      isFovrite: false,
+      quantity: 4
+      
+      )
+      
+      ,
 
 
-  Shous(id: 0,
+  Shous(id: 5,
    name: 'nike',
     imagePath: 'assets/images/shous6.png',
     description: 'EPIC-REACT',
       price: 23, 
-           Color: Colors.redAccent,
+           Color: Colors.red.shade900,
+           quantity:5 ,
 
-      isFovrite: false),
-
+      isFovrite: false,
+      
+      ),
 
 
 
